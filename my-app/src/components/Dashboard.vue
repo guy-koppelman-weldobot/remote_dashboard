@@ -1,61 +1,222 @@
 <template>
-  <div class="hello">
-    <Header />
-    <div class="container mrgnbtm">
-          <div class="row">
-            <div class="col-md-8">
-                <CreateUser @createUser="userCreate($event)" />
-            </div>
-            <div class="col-md-4">
-                <DisplayBoard :numberOfUsers="numberOfUsers" @getAllUsers="getAllUsers()" />
-            </div>
+  <div class="container">
+    <div class="header">
+      <div class="header-column robot-mode">
+        <div class="mode"><span>Mode:</span><span style="color:yellow">{{cycleData.Mode}}</span></div>
+        <div class="robot"><span>Robot:</span><span style="color:yellow">{{cycleData.Robot}}</span></div>
+      </div>
+      <div class="header-column pass" style="font-size:30px"><span>Pass:</span><span style="color:yellow">{{cycleData.Pass}}</span></div>
+      <div class="header-column joint-heat">
+        <div class="joint-num"><span>Joint #:</span><span style="color:yellow">{{cycleData.Joint}}</span></div>
+        <div class="heat"><span>Heat input:</span><span style="color:yellow">{{cycleData.InputHeat}}&deg;</span></div>
+      </div>
+    </div>
+    <div class="main">
+          <div class="mein-sections positions">
+            <div>Axes</div>
+            <div>&#x3B8; pos: <p style="display: inline; color:yellow">{{cycleData.ThetaPos}} 	&deg;</p></div>
+            <div>Z pos: <p style="display: inline; color:yellow">{{cycleData.Zpos}} mm</p></div>
+            <div>Y pos: <p style="display: inline; color:yellow">{{cycleData.Zpos}} mm</p></div>
+          </div>
+          <div class="mein-sections amp">
+            <div style="margin-top: 55px;">Current</div>
+            <div style="margin: auto; width: 90%; padding-top:150px; text-align: center; height: 45%;"><p style="display: inline; color:yellow; font-size:56px">{{cycleData.Current}} A</p></div>
+          </div>
+          <div class="mein-sections state">
+            <div style="margin-top: 55px;">State</div>
+            <div style="margin: auto; width: 90%; padding-top:150px; text-align: center; height: 45%; color:yellow">{{cycleData.Status}}</div>
+          </div>
+          <div class="mein-sections volt">
+            <div style="margin-top: 55px;">Voltage</div>
+            <div style="margin: auto; width: 90%; padding-top:150px; text-align: center; height: 45%;"><p style="display: inline; color:yellow; font-size:56px">{{cycleData.Voltage}} V</p></div>
+          </div>
+          <div class="mein-sections speed-arc">
+            <div>Speed: <p style="display: inline; color:yellow">{{cycleData.TravelSpeed}} mm/m</p></div>
+            <div>AL: <p style="display: inline; color:yellow">{{cycleData.ArcL}} V</p></div>
+            <div>AC: <p style="display: inline; color:yellow">{{cycleData.ArcC}} V</p></div>
           </div>
     </div>
-    <div class="row mrgnbtm">
-        <Users v-if="users.length > 0" :users="users" />
+    <div class="footer" style="border: 1px rgb(61, 61, 65) solid;">
+      System messages: <p>{{cycleData.SystemMessage}}</p>
     </div>
   </div>
 </template>
 
 <script>
-import Header from './Header.vue'
-import CreateUser from './CreateUser.vue'
-import DisplayBoard from './DisplayBoard.vue'
-import Users from './Users.vue'
-import { getAllUsers, createUser } from '../services/UserService'
 
+import io from 'socket.io-client';
 export default {
   name: 'Dashboard',
   components: {
-    Header,
-    CreateUser,
-    DisplayBoard,
-    Users
+
   },
   data() {
       return {
-          users: [],
-          numberOfUsers: 0
+          socket : io('127.0.0.1:3000'),
+          cycleData: {}
       }
   },
   methods: {
-    getAllUsers() {
-      getAllUsers().then(response => {
-        console.log(response)
-        this.users = response
-        this.numberOfUsers = this.users.length
-      })
-    },
-    userCreate(data) {
-      console.log('data:::', data)
-      createUser(data).then(response => {
-        console.log(response);
-        this.getAllUsers();
-      });
-    }
   },
   mounted () {
-    this.getAllUsers();
+            this.socket.on('GET_DATA', (data) => {
+            var t = JSON.parse(data);
+            this.cycleData = t;
+        });
   }
 }
 </script>
+
+<style scoped>
+.container{
+  background-color: black;
+  display: flex;
+  flex-direction:column;
+  justify-content: space-around;
+  align-items: center;
+  height: 100vh;
+  border: 2px gray solid;
+}
+
+.header,
+.main,
+.footer
+{
+  /* border: 1px lightgray solid; */
+  color: white;
+  margin-top:5px;
+  width: 100%;
+}
+
+.header{
+    height: 20%;
+    display:flex;
+    flex-direction: row;
+    justify-content:space-between;
+    align-items: center;
+  }
+
+  .main{
+    height: 65%;
+    display:flex;
+    flex-direction: row;
+    justify-content:space-between;
+    align-items: center;
+  }
+
+  .footer{
+    justify-content:space-between;
+    padding-left: 50px;
+    display: inline-block;
+    vertical-align: middle;
+    height: 90px;
+    line-height: 100px;
+    margin-bottom: 5px;
+  }
+
+  .footer p{
+    display: inline;
+    color: darkgreen;
+  }
+
+  .footer-content {
+        display: inline-block;
+        vertical-align: middle;
+  }
+
+  .header-column{
+    margin: 5px;
+    width: 33%;
+    height: 90%;
+    border: 1px rgb(61, 61, 65) solid;
+    border-radius: 5px;
+  }
+
+  .robot-mode{
+    display:flex; 
+    flex-direction: column; 
+    justify-content: space-around; 
+    align-items: center;
+    height: 90%;
+  }
+
+  .robot,
+  .mode
+  {
+    display:flex;
+    flex-direction: row;
+    justify-content:space-evenly; 
+    align-items: center;
+    width: 90%;
+    height:35%;
+    /* border: 1px white solid; */
+    font-size: 20px;
+  }
+
+  .pass{
+    display:flex;
+    flex-direction: row;
+    justify-content:space-evenly; 
+    align-items: center;
+    /* border: 1px white solid; */
+    font-size: 20px;
+  }
+
+
+.joint-heat{
+    display:flex;
+    flex-direction: column;
+    justify-content: space-around; 
+    align-items: center;
+}
+  .joint-num,
+  .heat
+  {
+    display:flex;
+    flex-direction: row;
+    justify-content:space-evenly; 
+    align-items: center;
+    width: 90%;
+    height:35%;
+    /* border: 1px white solid; */
+    font-size: 20px;
+  }
+
+  .mein-sections{
+    border: 1px rgb(61, 61, 65) solid;
+    height: 97%;
+    border-radius: 5px;
+    font-size: 25px;
+  }
+
+  .positions{
+    width: 19%;
+    display:flex;
+    flex-direction: column;
+    justify-content:space-evenly; 
+    align-items: center;
+  }
+
+  .amp {
+      width: 23%;
+      text-align: center;
+      font-size:25px;
+  }
+  .volt{
+      width: 23%;
+      text-align: center;
+      font-size:25px;
+  }
+  .state{
+      width: 10%;
+      text-align: center;
+      font-size:25px;
+  }
+  .speed-arc{
+    width: 19%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+  }
+</style>

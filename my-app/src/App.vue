@@ -1,6 +1,7 @@
 <template>
   <div id="app">
-    <Dashboard />
+    <!-- <Dashboard /> -->
+    <router-view/>
   </div>
 </template>
 
@@ -8,16 +9,16 @@
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 
-import Dashboard from './components/Dashboard.vue'
+//import Dashboard from './components/Dashboard.vue'
 
 export default {
   name: 'App',
   components: {
-    Dashboard
+    //Dashboard
   }
 }
 </script>
 
 <style>
-  @import './assets/styles/global.css';
+  /* @import './assets/styles/global.css'; */
 </style>
