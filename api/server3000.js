@@ -69,16 +69,18 @@ app.get('/loadXml', async(req, res) => {
         sendMsg('GET_DATA', jsonStr)
   });
 
-const server = app.listen(process.env.PORT || 3000, () => {
-    console.log("server is running")
-});
+  const port = 3000;
+  const server = app.listen(process.env.PORT || port, () => {
+      console.log(`server is running on port ${port}`)
+  });
+  
 
 //initialize socket for the server
 //const io = socketio(server)
 
 const io = require("socket.io")(server, {
   cors: {
-    origin: "http://localhost:8081",
+    origin: "http://localhost:8080",
     methods: ["GET", "POST"]
   }
 });
@@ -95,11 +97,3 @@ io.on('MENU_UP', data => {
 var sendMsg = (msgType , data) => {
   io.emit(msgType, data)
 }
-
-
-
-// sock.on("message", function(topic, message) {
-//   var stopic = new TextDecoder("utf-8").decode(topic);
-//   var smsg = new TextDecoder("utf-8").decode(message);
-//   let msg = JSON.JSON(smsg);
-//   });

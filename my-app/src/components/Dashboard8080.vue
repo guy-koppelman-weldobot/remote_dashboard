@@ -8,19 +8,19 @@
       <div class="header-column pass" style="font-size:30px"><span>Pass:</span><span style="color:yellow">{{cycleData.Pass}}</span></div>
       <div class="header-column joint-heat">
         <div class="joint-num"><span>Joint #:</span><span style="color:yellow">{{cycleData.Joint}}</span></div>
-        <div class="heat"><span>Heat input:</span><span style="color:yellow">{{cycleData.InputHeat}}&deg;</span></div>
+        <div class="heat"><span>Heat input:</span><span style="color:yellow">{{InputHeat}}&deg;</span></div>
       </div>
     </div>
     <div class="main">
           <div class="mein-sections positions">
             <div>Axes</div>
-            <div>&#x3B8; pos: <p style="display: inline; color:yellow">{{cycleData.ThetaPos}} 	&deg;</p></div>
-            <div>Z pos: <p style="display: inline; color:yellow">{{cycleData.Zpos}} mm</p></div>
-            <div>Y pos: <p style="display: inline; color:yellow">{{cycleData.Zpos}} mm</p></div>
+            <div>&#x3B8; pos: <p style="display: inline; color:yellow">{{ThetaPos}} 	&deg;</p></div>
+            <div>Z pos: <p style="display: inline; color:yellow">{{ZPos}} mm</p></div>
+            <div>Y pos: <p style="display: inline; color:yellow">{{YPos}} mm</p></div>
           </div>
           <div class="mein-sections amp">
             <div style="margin-top: 55px;">Current</div>
-            <div style="margin: auto; width: 90%; padding-top:150px; text-align: center; height: 45%;"><p style="display: inline; color:yellow; font-size:56px">{{cycleData.Current}} A</p></div>
+            <div style="margin: auto; width: 90%; padding-top:150px; text-align: center; height: 45%;"><p style="display: inline; color:yellow; font-size:56px">{{Current}} A</p></div>
           </div>
           <div class="mein-sections state">
             <div style="margin-top: 55px;">State</div>
@@ -28,10 +28,10 @@
           </div>
           <div class="mein-sections volt">
             <div style="margin-top: 55px;">Voltage</div>
-            <div style="margin: auto; width: 90%; padding-top:150px; text-align: center; height: 45%;"><p style="display: inline; color:yellow; font-size:56px">{{cycleData.Voltage}} V</p></div>
+            <div style="margin: auto; width: 90%; padding-top:150px; text-align: center; height: 45%;"><p style="display: inline; color:yellow; font-size:56px">{{Voltage}} V</p></div>
           </div>
           <div class="mein-sections speed-arc">
-            <div>Speed: <p style="display: inline; color:yellow">{{cycleData.TravelSpeed}} mm/m</p></div>
+            <div>Speed: <p style="display: inline; color:yellow">{{TravelSpeed}} mm/m</p></div>
             <div>AL: <p style="display: inline; color:yellow">{{cycleData.ArcL}} V</p></div>
             <div>AC: <p style="display: inline; color:yellow">{{cycleData.ArcC}} V</p></div>
           </div>
@@ -46,14 +46,21 @@
 
 import io from 'socket.io-client';
 export default {
-  name: 'Dashboard',
+  name: 'Dashboard8080',
   components: {
 
   },
   data() {
       return {
           socket : io('127.0.0.1:3000'),
-          cycleData: {}
+          cycleData: {},
+          Current: 0.0,
+          Voltage: 0.0,
+          Zpos: 0.0,
+          Ypos: 0.0,
+          ThetaPos: 0.0,
+          InputHeat: 0.0,
+          TravelSpeed: 0.0
       }
   },
   methods: {
@@ -62,6 +69,13 @@ export default {
             this.socket.on('GET_DATA', (data) => {
             var t = JSON.parse(data);
             this.cycleData = t;
+            this.Current = Number(t.Current).toFixed(2);
+            this.Voltage = Number(t.Voltage).toFixed(2);
+            this.YPos = Number(t.Ypos).toFixed(2);
+            this.ZPos = Number(t.Zpos).toFixed(2);
+            this.ThetaPos = Number(t.ThetaPos).toFixed(2);
+            this.InputHeat = Number(t.InputHeat).toFixed(2);
+            this.TravelSpeed = Number(t.TravelSpeed).toFixed(2);
         });
   }
 }
