@@ -2,8 +2,9 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import home from '@/components/home'
 //import { component } from 'vue/types/umd'
-import Dashboard8080 from '@/components/Dashboard8080'
-import Dashboard8081 from '@/components/Dashboard8081'
+import Dashboard3000 from '@/components/Dashboard3000'
+import Dashboard3001 from '@/components/Dashboard3001'
+import NotFount from '@/components/NotFound'
 
 
 Vue.use(Router)
@@ -24,14 +25,18 @@ export default new Router({
       component: home
     },
     {
-      path: '/dash8080',
+      path: '/',
       //name: 'Dashboard8080',
-      component: Dashboard8080
+      component: Dashboard3000
     },
     {
-      path: '/dash8081',
+      path: '/dash3001',
       //name: 'Dashboard8081',
-      component: Dashboard8081
+      component: Dashboard3001
+    },
+    {
+      path: '*',
+      component: NotFount
     }
   ]
 })

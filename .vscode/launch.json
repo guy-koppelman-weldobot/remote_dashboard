@@ -7,11 +7,20 @@
         {
             "type": "node",
             "request": "launch",
-            "name": "Run App",
+            "name": "Run App - 3000",
             "skipFiles": [
                 "<node_internals>/**"
             ],
-            "program": "./api/server.js"
+            "program": "./api/server3000.js"
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Run App - 3001",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "program": "./api/server3001.js"
         }
     ]
 }
