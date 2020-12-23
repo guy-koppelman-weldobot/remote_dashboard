@@ -8,7 +8,7 @@
       <div class="header-column pass" style="font-size:30px"><span>Pass:</span><span style="color:yellow">{{cycleData.Pass}}</span></div>
       <div class="header-column joint-heat">
         <div class="joint-num"><span>Joint #:</span><span style="color:yellow">{{cycleData.Joint}}</span></div>
-        <div class="heat"><span>Heat input:</span><span style="color:yellow">{{InputHeat}}&deg;</span></div>
+        <div class="heat"><span>Heat input:</span><span style="color:yellow">{{InputHeat}} KJ/mm</span></div>
       </div>
     </div>
     <div class="main">
@@ -31,7 +31,7 @@
             <div style="margin: auto; width: 90%; padding-top:150px; text-align: center; height: 45%;"><p style="display: inline; color:yellow; font-size:56px">{{Voltage}} V</p></div>
           </div>
           <div class="mein-sections speed-arc">
-            <div>Speed: <p style="display: inline; color:yellow">{{TravelSpeed}} mm/m</p></div>
+            <div>Speed: <p style="display: inline; color:yellow">{{TravelSpeed}}</p><p style="color:yellow; font-size:20px">(CM/Min)</p></div>
             <div>AL: <p style="display: inline; color:yellow">{{cycleData.ArcL}} V</p></div>
             <div>AC: <p style="display: inline; color:yellow">{{cycleData.ArcC}} V</p></div>
           </div>
@@ -45,8 +45,10 @@
 <script>
 
 import io from 'socket.io-client';
+import {bus} from '../main';
+// let {navigate2}  = require('./listService');
 export default {
-  name: 'Dashboard8080',
+  name: 'Dashboard3000',
   components: {
 
   },
@@ -64,9 +66,13 @@ export default {
       }
   },
   methods: {
+    navigate: async function (data ){    
+          await  this.$router.push({path: data.target}); 
+          await  bus.$emit('ListUpdated',data);
+    }
   },
   mounted () {
-            this.socket.on('GET_DATA', (data) => {
+        this.socket.on('GET_DATA', (data) => {
             var t = JSON.parse(data);
             this.cycleData = t;
             this.Current = Number(t.Current).toFixed(2);
@@ -76,6 +82,11 @@ export default {
             this.ThetaPos = Number(t.ThetaPos).toFixed(2);
             this.InputHeat = Number(t.InputHeat).toFixed(2);
             this.TravelSpeed = Number(t.TravelSpeed).toFixed(2);
+        });
+
+
+        this.socket.on('NAV',(data) => {
+          this.navigate(data);
         });
   }
 }
