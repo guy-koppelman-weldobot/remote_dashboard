@@ -7,10 +7,10 @@ const config = {};
         config.CLIENT_FOLDER                =   'client';
 
 
-        config.common.CC_PORT               =    3000;
+        config.common.CW_PORT               =    3000;
         config.common.CCW_PORT              =    3001;
         config.common.HOST                  =    'localhost';
-        config.common.CC_SOCKET_PORT        = 3000;
+        config.common.CW_SOCKET_PORT        = 3000;
         config.common.CCW_SOCKET_PORT       = 3001;
 
 
