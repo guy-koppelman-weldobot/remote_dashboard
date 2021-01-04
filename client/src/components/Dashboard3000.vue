@@ -93,14 +93,17 @@ export default {
 </script>
 
 <style scoped>
+
 .container{
   background-color: black;
   display: flex;
   flex-direction:column;
-  justify-content: space-around;
+  justify-content: center;
   align-items: center;
   height: 100vh;
-  border: 2px gray solid;
+  width: 100%;
+  border: 1px gray solid;
+  flex-grow: 1;
 }
 
 .header,

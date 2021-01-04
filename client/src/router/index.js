@@ -27,12 +27,12 @@ export default new Router({//
     {
       path: '/',
       //name: 'Dashboard8080',
-      component: Dashboard3000
+      component: Dashboard3001
     },
     {
-      path: '/dash3001',
+      path: '/dash3000',
       //name: 'Dashboard8081',
-      component: Dashboard3001
+      component: Dashboard3000
     },
     {
       path: '*',

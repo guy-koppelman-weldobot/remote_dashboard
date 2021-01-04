@@ -1,7 +1,7 @@
 <template>
-  <div id="app">
+  <div class="con"> 
     <!-- <Dashboard /> -->
-    <router-view/>
+    <router-view class="rout"/>
   </div>
 </template>
 
@@ -19,6 +19,16 @@ export default {
 }
 </script>
 
-<style>
-  /* @import './assets/styles/global.css'; */
-</style>
+  <style>
+
+      .rout{
+        /* border: 3px orange solid; */
+      }
+      .con{
+      background-color: black;
+      height: 100%;
+      width: 100%;
+      padding-top: 10px;
+      padding-bottom: 10px;
+    }
+  </style>
