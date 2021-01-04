@@ -11,7 +11,7 @@
         </div>
 </template>
 <script>
-import io from 'socket.io-client';
+//import io from 'socket.io-client';
 import {bus} from '../main';
 export default {
     name: 'list',
@@ -19,7 +19,7 @@ export default {
         return {
 
             // PORT---------------------
-            socket : io('127.0.0.1:3000'),
+            //socket : io('127.0.0.1:3000'),
             current_index: 0,
             current_list: []
         }
@@ -32,7 +32,7 @@ export default {
     mounted() {
         bus.$on('ListUpdated', (list) =>{
             //console.log(list);
-            this.current_list = list.data;
+            this.current_list = list.data.Item2;
         });
     }
 }

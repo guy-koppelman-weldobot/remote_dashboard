@@ -48,13 +48,13 @@ import io from 'socket.io-client';
 import {bus} from '../main';
 // let {navigate2}  = require('./listService');
 export default {
-  name: 'Dashboard3000',
+  name: 'Dashboard3001',
   components: {
 
   },
   data() {
       return {
-          socket : io('127.0.0.1:3000'),
+          socket : io('127.0.0.1:3001'),
           cycleData: {},
           Current: 0.0,
           Voltage: 0.0,
@@ -67,13 +67,13 @@ export default {
   },
   methods: {
     navigate: async function (data ){    
-          await  this.$router.push({path: data.target}); 
           await  bus.$emit('ListUpdated',data);
+          await  this.$router.push({path: data.target}); 
     }
   },
   mounted () {
         this.socket.on('GET_DATA', (data) => {
-            var t = JSON.parse(data);
+            var t = data; //  JSON.parse(data);
             this.cycleData = t;
             this.Current = Number(t.Current).toFixed(2);
             this.Voltage = Number(t.Voltage).toFixed(2);
@@ -87,6 +87,10 @@ export default {
 
         this.socket.on('NAV',(data) => {
           this.navigate(data);
+        });
+
+        this.socket.on('DASH',() => {
+          this.$router.push({path: '/'}); 
         });
   }
 }

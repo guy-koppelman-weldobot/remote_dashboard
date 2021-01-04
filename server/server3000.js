@@ -9,7 +9,7 @@ const bodyParser = require('body-parser');
 const path = require('path');
 const history = require('connect-history-api-fallback');
 const CONFIG = require('./config');
-const COMMON_CONFIG = CONFIG.common;
+
 
 app.use(bodyParser.json());
 app.use(function (req, res, next) {
@@ -19,6 +19,8 @@ app.use(function (req, res, next) {
   next();
 });
 
+const port = CONFIG.common.CW_PORT;
+const socket_io_port = CONFIG.common.CW_SOCKET_PORT;
 
 app.use(express.static(path.join(__dirname, `../${CONFIG.CLIENT_FOLDER}/dest-3000`)));
 //app.use(history);
@@ -36,8 +38,8 @@ app.use(express.static(path.join(__dirname, `../${CONFIG.CLIENT_FOLDER}/dest-300
     res.status(200).send('list received');
   });
 
-  const port = COMMON_CONFIG.CC_PORT;
-  const server = app.listen(process.env.PORT || port, () => {
+  
+  const server = app.listen(port, () => { /* app.listen(process.env.PORT || 3001 */
       console.log(`server is running on port ${port}`)
   });
 
@@ -46,10 +48,15 @@ app.use(express.static(path.join(__dirname, `../${CONFIG.CLIENT_FOLDER}/dest-300
     res.sendFile(path.join(__dirname, `../${CONFIG.CLIENT_FOLDER}/dest-3000/index.html`));
   });
 
+  app.post('/dash' ,async (req,res) => {
+    var data = req.body;
+    io.emit('DASH');
+  });
+
   // register the socket.io 
   const io = require("socket.io")(server, {
     cors: {
-      origin: `http://localhost:${COMMON_CONFIG.CC_SOCKET_PORT}`,
+      origin: `http://localhost:${port}`,
       methods: ["GET", "POST"]
     }
   });

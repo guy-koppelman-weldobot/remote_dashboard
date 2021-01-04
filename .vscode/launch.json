@@ -11,7 +11,7 @@
             "skipFiles": [
                 "<node_internals>/**"
             ],
-            "program": "./api/server3000.js"
+            "program": "./server/server3000.js"
         },
         {
             "type": "node",
@@ -20,7 +20,7 @@
             "skipFiles": [
                 "<node_internals>/**"
             ],
-            "program": "./api/server3001.js"
+            "program": "./server/server3001.js"
         }
     ]
 }
