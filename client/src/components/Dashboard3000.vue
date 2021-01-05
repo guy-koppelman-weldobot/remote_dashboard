@@ -67,8 +67,8 @@ export default {
   },
   methods: {
     navigate: async function (data ){    
-          await  bus.$emit('ListUpdated',data);
-          await  this.$router.push({path: data.target}); 
+          //await  bus.$emit('ListUpdated',data);
+          await  this.$router.push({path: data.target, name: 'list', params: {payload: data}}); 
     }
   },
   mounted () {
@@ -98,18 +98,16 @@ export default {
 
 <style scoped>
 
-
-
 .container{
+  flex: auto;
   background-color: black;
   display: flex;
   flex-direction:column;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  height: 95vh;
   width: 100vw;
-  border: 1px gray solid;
-  margin-left: 0;
+  /* border: 1px gray solid; */
 }
 
 .header,
@@ -119,7 +117,7 @@ export default {
   /* border: 1px lightgray solid; */
   color: white;
   margin-top:5px;
-  width: 100%;
+  width: 93vw;
 }
 
 .header{

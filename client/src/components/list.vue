@@ -24,6 +24,7 @@ export default {
             current_list: []
         }
     },
+
     methods: {
     },
     computed : {
@@ -34,6 +35,8 @@ export default {
             //console.log(list);
             this.current_list = list.data.Item2;
         });
+
+        this.current_list = this.$route.params.payload.list.data.Item2;
     }
 }
 </script>

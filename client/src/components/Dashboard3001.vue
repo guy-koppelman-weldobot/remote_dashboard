@@ -1,4 +1,5 @@
-<template>
+
+<template style="width:100; marging:0;border:3px red solid">
   <div class="container">
     <div class="header">
       <div class="header-column robot-mode">
@@ -67,8 +68,9 @@ export default {
   },
   methods: {
     navigate: async function (data ){    
-          await  bus.$emit('ListUpdated',data);
-          await  this.$router.push({path: data.target}); 
+          //await  bus.$emit('ListUpdated',data);
+          //await  this.$router.push({path: data.target}); 
+          await  this.$router.push({path: data.target, name: 'list', params: {payload: data}}); 
     }
   },
   mounted () {
@@ -105,9 +107,9 @@ export default {
   flex-direction:column;
   justify-content: center;
   align-items: center;
-  height: 100vh;
-  width: 100%;
-  border: 1px gray solid;
+  height: 95vh;
+  width: 100vw;
+  /* border: 1px gray solid; */
 }
 
 .header,
@@ -117,7 +119,7 @@ export default {
   /* border: 1px lightgray solid; */
   color: white;
   margin-top:5px;
-  width: 100%;
+  width: 93vw;
 }
 
 .header{

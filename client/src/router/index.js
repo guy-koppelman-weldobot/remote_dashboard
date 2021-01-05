@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import home from '@/components/list'
+import list from '@/components/list'
 //import { component } from 'vue/types/umd'
 import Dashboard3000 from '@/components/Dashboard3000'
 import Dashboard3001 from '@/components/Dashboard3001'
@@ -22,7 +22,7 @@ export default new Router({//
     {
       path: '/list',
       name: 'list',
-      component: home,
+      component: list
     },
     // {
     //   path: '/',
