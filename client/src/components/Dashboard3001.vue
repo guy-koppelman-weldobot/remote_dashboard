@@ -97,7 +97,9 @@ export default {
 </script>
 
 <style scoped>
+
 .container{
+  flex: auto;
   background-color: black;
   display: flex;
   flex-direction:column;
@@ -106,7 +108,6 @@ export default {
   height: 100vh;
   width: 100%;
   border: 1px gray solid;
-  flex-grow: 1;
 }
 
 .header,
