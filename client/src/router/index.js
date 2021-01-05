@@ -31,13 +31,13 @@ export default new Router({//
     // },
     {
       path: '/',
-      name: 'Dashboard3001',
-      component: Dashboard3001
+      name: 'Dashboard3000',
+      component: Dashboard3000
     },
     {
       path: '/dash3000',
-      name: 'Dashboard3000',
-      component: Dashboard3000
+      name: 'Dashboard3001',
+      component: Dashboard3001
     },
     {
       path: '*',
