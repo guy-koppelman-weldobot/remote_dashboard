@@ -1,13 +1,14 @@
 <template>
-  <div class="con"> 
+  <div> 
     <!-- <Dashboard /> -->
-    <router-view class="rout"/>
+    <router-view/>
   </div>
 </template>
 
 <script>
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
+nom 
 
 //import Dashboard from './components/Dashboard.vue'
 
@@ -18,17 +19,3 @@ export default {
   }
 }
 </script>
-
-  <style>
-
-      .rout{
-        /* border: 3px orange solid; */
-      }
-      .con{
-      background-color: black;
-      height: 100%;
-      width: 100%;
-      padding-top: 10px;
-      padding-bottom: 10px;
-    }
-  </style>

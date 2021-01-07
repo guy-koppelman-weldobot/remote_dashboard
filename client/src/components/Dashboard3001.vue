@@ -46,7 +46,7 @@
 <script>
 
 import io from 'socket.io-client';
-import {bus} from '../main';
+//import {bus} from '../main';
 // let {navigate2}  = require('./listService');
 export default {
   name: 'Dashboard3001',
@@ -70,7 +70,9 @@ export default {
     navigate: async function (data ){    
           //await  bus.$emit('ListUpdated',data);
           //await  this.$router.push({path: data.target}); 
-          await  this.$router.push({path: data.target, name: 'list', params: {payload: data}}); 
+          //await  this.$router.push({path: data.target, name: 'list', params: {payload: data}}); 
+           this.$store.commit('setList',data);
+           await  this.$router.push({path: data.target, name: 'list'});
     }
   },
   mounted () {

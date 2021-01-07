@@ -68,7 +68,8 @@ export default {
   methods: {
     navigate: async function (data ){    
           //await  bus.$emit('ListUpdated',data);
-          await  this.$router.push({path: data.target, name: 'list', params: {payload: data}}); 
+          //await  this.$router.push({path: data.target, name: 'list', params: {payload: data}}); 
+          await  this.$router.push({path: data.target, name: 'list'});
     }
   },
   mounted () {
