@@ -36,7 +36,8 @@ export default {
             this.current_list = list.data.Item2;
         });
 
-        this.current_list = this.$route.params.payload.list.data.Item2;
+        //this.current_list = this.$route.params.payload.list.data.Item2;
+        this.current_list = this.$store.getCurrentList();
     }
 }
 </script>
