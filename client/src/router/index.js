@@ -9,6 +9,12 @@ import NotFount from '@/components/NotFound'
 
 Vue.use(Router)
 
+
+// const originalPush = Router.prototype.push
+// Router.prototype.push = function push (location) {
+//   return originalPush.call(this, location).catch(err => err)
+// }
+
 export default new Router({//
   // mode: 'history',
   routes:
@@ -20,8 +26,8 @@ export default new Router({//
     //         //}
     // },
     {
-      path: '/list',
-      name: 'list',
+      path: '/list/:rand',
+      //name: 'list',
       component: list
     },
     // {
@@ -31,13 +37,13 @@ export default new Router({//
     // },
     {
       path: '/',
-      name: 'Dashboard3000',
-      component: Dashboard3000
+      name: 'Dashboard3001',
+      component: Dashboard3001
     },
     {
       path: '/dash3000',
-      name: 'Dashboard3001',
-      component: Dashboard3001
+      name: 'Dashboard3000',
+      component: Dashboard3000
     },
     {
       path: '*',

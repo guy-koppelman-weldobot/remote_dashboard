@@ -45,6 +45,7 @@
 <script>
 
 import io from 'socket.io-client';
+//import { mapGetters } from 'vuex'
 import {bus} from '../main';
 // let {navigate2}  = require('./listService');
 export default {
@@ -67,9 +68,12 @@ export default {
   },
   methods: {
     navigate: async function (data ){    
-          //await  bus.$emit('ListUpdated',data);
-          //await  this.$router.push({path: data.target, name: 'list', params: {payload: data}}); 
-          await  this.$router.push({path: data.target, name: 'list'});
+          await  bus.$emit('ListUpdated',data);
+          //await  this.$router.push({path: data.target, name: 'list', params: {payload: data}});                                 
+ 
+          //this.$store.commit('setList',data);
+          let r = Math.random();
+          this.$router.push({path: data.target + '/' + r.toString()});  
     }
   },
   mounted () {
@@ -93,7 +97,15 @@ export default {
         this.socket.on('DASH',() => {
           this.$router.push({path: '/'}); 
         });
-  }
+        this.socket.on('disconnect', ()=>{
+           window.location.href = "localhost:3000/";
+        });
+  },
+  computed: {
+      CurrentList: function () {
+         return this.$store.getters.getCurrentList;
+    }
+}
 }
 </script>
 

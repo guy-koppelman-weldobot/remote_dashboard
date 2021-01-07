@@ -1,4 +1,10 @@
-const store = new Vuex.Store({
+
+import Vue from 'vue'
+import vuex from 'vuex'
+
+Vue.use(vuex);
+
+export const store = new vuex.Store({
     state: {
       curent_list: []
     },
@@ -13,5 +19,3 @@ const store = new Vuex.Store({
         }
       }
   });
-
-export default  store;

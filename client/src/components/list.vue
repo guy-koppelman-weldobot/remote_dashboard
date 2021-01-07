@@ -1,6 +1,6 @@
 <template>
-<div class="container mrgnbtm">
-            <div class="header">Select welding pass</div>
+<div class="mrgnbtm">
+            <div class="header">{{list_name == "" ? "Please select": list_name}}</div>
                 <div class="row black" style="margin:0px; padding: 10px; height: 100%;"> 
                     <div class="col-md-12"> 
                         <ul class="list-group">
@@ -12,6 +12,7 @@
 </template>
 <script>
 //import io from 'socket.io-client';
+
 import {bus} from '../main';
 export default {
     name: 'list',
@@ -21,7 +22,8 @@ export default {
             // PORT---------------------
             //socket : io('127.0.0.1:3000'),
             current_index: 0,
-            current_list: []
+            current_list: [],
+            list_name: ''
         }
     },
 
@@ -34,10 +36,13 @@ export default {
         bus.$on('ListUpdated', (list) =>{
             //console.log(list);
             this.current_list = list.data.Item2;
+            this.list_name = list.data.Item1;
         });
 
         //this.current_list = this.$route.params.payload.list.data.Item2;
-        this.current_list = this.$store.getCurrentList();
+       
+        //this.current_list = this.$store.state.current_list.data.Item2;
+        //this.list_name = this.$store.state.current_list.data.Item1;
     }
 }
 </script>
