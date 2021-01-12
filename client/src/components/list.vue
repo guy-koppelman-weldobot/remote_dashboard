@@ -33,6 +33,7 @@ export default {
 
     },
     mounted() {
+        
         bus.$on('ListUpdated', (list) =>{
             //console.log(list);
             this.current_list = list.data.Item2;
@@ -41,6 +42,7 @@ export default {
 
         //this.current_list = this.$route.params.payload.list.data.Item2;
        
+       this.current_list = this.$store.state.current_list;
         //this.current_list = this.$store.state.current_list.data.Item2;
         //this.list_name = this.$store.state.current_list.data.Item1;
     }

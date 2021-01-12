@@ -63,16 +63,42 @@ export default {
           ThetaPos: 0.0,
           InputHeat: 0.0,
           TravelSpeed: 0.0,
-          isDryRun: false
+          isDryRun: false,
+          current_list: {}
       }
   },
   methods: {
     navigate: async function (data ){    
           await  bus.$emit('ListUpdated',data);
-          //this.$store.commit('setList',data);
-          //await  this.$router.push({path: data.target, name: 'list', params: {payload: data}});                                 
+
+  let json =JSON.parse(`[
+	{
+		"id": 0,
+		"Name": "Pipes",
+		"index": true,
+		"default": true
+	},
+	{
+		"id": 1,
+		"Name": "Joints",
+		"index": false,
+		"default": false
+	},
+	{
+		"id": 2,
+		"Name": "Dry run",
+		"index": false,
+		"default": false
+	}
+]`);
+          //this.$store.commit('setList',json);
+          //await  this.$router.push({path: data.target, name: 'list', params: {payload: data}});
+          
+
+          
+
           let r = Math.random();
-          this.$router.push({path: data.target + '/' + r.toString()});   
+          this.$router.push({path: data.target + '/' + r.toString()},()=>{this.$store.commit('setList',json);});   
 
     }
   },
@@ -92,8 +118,9 @@ export default {
 
 
         this.socket.on('NAV',(data) => {
+         let dd = data;
+          console.log(dd);
           this.navigate(data);
-          console.log(data);
         });
 
         this.socket.on('DASH',() => {

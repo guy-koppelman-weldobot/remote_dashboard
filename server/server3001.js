@@ -38,6 +38,10 @@ app.use(express.static(path.join(__dirname, `../${CONFIG.CLIENT_FOLDER}/dest-300
     res.status(200).send('list received');
   });
 
+  app.get('/list', async(req,res)=>{ 
+    sendMsg('NAV', {target: '/list',payload:{d:'my data'}})
+    res.status(200).send('list received');
+  });
   
   const server = app.listen(port, () => { /* app.listen(process.env.PORT || 3001 */
       console.log(`server is running on port ${port}`)
