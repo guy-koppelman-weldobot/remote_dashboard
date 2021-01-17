@@ -4,6 +4,7 @@
                 <div class="row black" style="margin:0px; padding: 10px; height: 100%;"> 
                     <div class="col-md-12"> 
                         <ul class="list-group">
+                            <!-- <li class="list-group-item list-font" v-for="plan in current_list" :key="plan.Name" :class="{active_item: plan.index}">{{plan.Name}}</li> -->
                             <li class="list-group-item list-font" v-for="plan in current_list" :key="plan.Name" :class="{active_item: plan.index}">{{plan.Name}}</li>
                           </ul>
                     </div>
@@ -30,21 +31,32 @@ export default {
     methods: {
     },
     computed : {
-
+        list(){
+            return this.$store.state.current_list.data.Item2;
+        },
+        ListName (){
+            return this.$store.state.current_list.data.Item1;
+        }
     },
+    watch: {
+        List () {
+            this.current_list = this.$store.state.current_list.data.Item2;
+        },
+        ListName () {
+            this.list_name = this.$store.state.current_list.data.Item1;
+        }
+    } ,
     mounted() {
         
-        bus.$on('ListUpdated', (list) =>{
-            //console.log(list);
-            this.current_list = list.data.Item2;
-            this.list_name = list.data.Item1;
-        });
+        // bus.$on('ListUpdated', (list) =>{
+        //     this.current_list = list.data.Item2;
+        //     this.list_name = list.data.Item1;
+        // });
 
         //this.current_list = this.$route.params.payload.list.data.Item2;
-       
-       this.current_list = this.$store.state.current_list;
-        //this.current_list = this.$store.state.current_list.data.Item2;
-        //this.list_name = this.$store.state.current_list.data.Item1;
+        //this.current_list = this.$store.state.current_list;
+        this.current_list = this.$store.state.current_list.data.Item2;
+        this.list_name = this.$store.state.current_list.data.Item1;
     }
 }
 </script>

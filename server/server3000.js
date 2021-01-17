@@ -38,8 +38,9 @@ app.use(express.static(path.join(__dirname, `../${CONFIG.CLIENT_FOLDER}/dest-300
     res.status(200).send('list received');
   });
 
-  app.get('/list', async(req,res)=>{ 
-    sendMsg('NAV', {target: '/list',payload:{d:'my data'}})
+  app.get('/listI/:index', async(req,res)=>{ 
+    let index = req.params.index;
+    sendMsg('NAV', {target: '/list',index: index})
     res.status(200).send('list received');
   });
   

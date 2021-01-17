@@ -1,6 +1,8 @@
 .DS_Store
 node_modules
 /dist
+/dest-3000
+/dest-3001
 
 
 # local env files

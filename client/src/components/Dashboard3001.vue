@@ -3,7 +3,7 @@
   <div class="container">
     <div class="header">
       <div class="header-column robot-mode">
-        <div class="mode"><span>Mode:</span><span style="color:yellow">{{cycleData.Mode}}(<span v-bind:class="{'green':(isDryRun), 'red':(!isDryRun)}">{{isDryRun ? "Dry Run" : "Weld"}}</span>)</span></div>
+        <div class="mode"><span>Mode:</span><span style="color:yellow">{{cycleData.Mode}}&#32;(<span v-bind:class="{'green':(isDryRun), 'red':(!isDryRun)}">{{isDryRun ? "Dry Run" : "Weld"}}</span>)</span></div>
         <div class="robot"><span>Robot:</span><span style="color:yellow">{{cycleData.Robot}}</span></div>
       </div>
       <div class="header-column pass" style="font-size:30px"><span>Pass:</span><span style="color:yellow">{{cycleData.Pass}}</span></div>
@@ -38,7 +38,7 @@
           </div>
     </div>
     <div class="footer" style="border: 1px rgb(61, 61, 65) solid;">
-      System messages: <p>{{cycleData.SystemMessage}}</p>
+      System messages:&#32;<p>{{cycleData.SystemMessage}}</p>
     </div>
   </div>
 </template>
@@ -69,37 +69,39 @@ export default {
   },
   methods: {
     navigate: async function (data ){    
-          await  bus.$emit('ListUpdated',data);
-
-  let json =JSON.parse(`[
-	{
-		"id": 0,
-		"Name": "Pipes",
-		"index": true,
-		"default": true
-	},
-	{
-		"id": 1,
-		"Name": "Joints",
-		"index": false,
-		"default": false
-	},
-	{
-		"id": 2,
-		"Name": "Dry run",
-		"index": false,
-		"default": false
-	}
-]`);
+     await  bus.$emit('ListUpdated',data);
+    /*let json =JSON.parse(`[
+      {
+        "id": 0,
+        "Name": "Pipes",
+        "index": true,
+        "default": true
+      },
+      {
+        "id": 1,
+        "Name": "Joints",
+        "index": false,
+        "default": false
+      },
+      {
+        "id": 2,
+        "Name": "Dry run",
+        "index": false,
+        "default": false
+      }
+    
+    ]`);
+    */
+          await  bus.$emit('ListUpdated',data);  
           //this.$store.commit('setList',json);
           //await  this.$router.push({path: data.target, name: 'list', params: {payload: data}});
-          
-
-          
-
+          //this.$router.push({path: data.target + '/' + r.toString()},()=>{this.$store.commit('setList',json);});   
+                                                  
           let r = Math.random();
-          this.$router.push({path: data.target + '/' + r.toString()},()=>{this.$store.commit('setList',json);});   
-
+          // this.$router.push({path: data.target + '/' + r.toString()},()=>{
+          //     this.$store.commit('setList',data);
+          // });   
+          this.$router.push({path: data.target + '/' + r.toString()},() => bus.$emit('ListUpdated',data));
     }
   },
   mounted () {
