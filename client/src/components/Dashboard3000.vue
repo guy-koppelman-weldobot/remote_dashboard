@@ -46,7 +46,7 @@
 <script>
 
 import io from 'socket.io-client';
-import {bus} from '../main';
+//import {bus} from '../main';
 export default {
   name: 'Dashboard3000',
   components: {
@@ -69,67 +69,68 @@ export default {
   },
   methods: {
     navigate: async function (data ){    
-    let json1 = JSON.parse(`[
-      {
-        "id": 0,
-        "Name": "Pipes",
-        "index": true,
-        "default": true
-      },
-      {
-        "id": 1,
-        "Name": "Joints",
-        "index": false,
-        "default": false
-      },
-      {
-        "id": 2,
-        "Name": "Dry run",
-        "index": false,
-        "default": false
-      }
+    // let json1 = JSON.parse(`[
+    //   {
+    //     "id": 0,
+    //     "Name": "Pipes",
+    //     "index": true,
+    //     "default": true
+    //   },
+    //   {
+    //     "id": 1,
+    //     "Name": "Joints",
+    //     "index": false,
+    //     "default": false
+    //   },
+    //   {
+    //     "id": 2,
+    //     "Name": "Dry run",
+    //     "index": false,
+    //     "default": false
+    //   }
     
-    ]`);
+    // ]`);
 
-    let json2 = JSON.parse(`[
-      {
-        "id": 0,
-        "Name": "Pipes",
-        "index": false,
-        "default": false
-      },
-      {
-        "id": 1,
-        "Name": "Joints",
-        "index": true,
-        "default": true
-      },
-      {
-        "id": 2,
-        "Name": "Dry run",
-        "index": false,
-        "default": false
-      }
+    // let json2 = JSON.parse(`[
+    //   {
+    //     "id": 0,
+    //     "Name": "Pipes",
+    //     "index": false,
+    //     "default": false
+    //   },
+    //   {
+    //     "id": 1,
+    //     "Name": "Joints",
+    //     "index": true,
+    //     "default": true
+    //   },
+    //   {
+    //     "id": 2,
+    //     "Name": "Dry run",
+    //     "index": false,
+    //     "default": false
+    //   }
     
-    ]`);
+    // ]`);
     
          // await  bus.$emit('ListUpdated',data);  
           //this.$store.commit('setList',json);
           //await  this.$router.push({path: data.target, name: 'list', params: {payload: data}});
           //this.$router.push({path: data.target + '/' + r.toString()},()=>{this.$store.commit('setList',json);});   
                                                   
-          let r = Math.random();
-          var d = {};
-          d.data = {};
-          d.data.Item1 = 'list name';
-          d.data.Item2 = Number(data.index) == 1 ? json1 : json2;
+          // let r = Math.random();
+          // var d = {};
+          // d.data = {};
+          // d.data.Item1 = 'list name';
+          // d.data.Item2 = Number(data.index) == 1 ? json1 : json2;
 
           // this.$router.push({path: data.target + '/' + r.toString()},()=>{
           //     this.$store.commit('setList',data);
           // }); 
-
-          this.$store.commit('setList',d);  
-          this.$router.push({path: data.target + '/' + r.toString()},() => bus.$emit('ListUpdated',d));
+          let r = Math.random();
+          this.$store.commit('setList',data);  
+          //this.$router.push({path: data.target + '/' + r.toString()},() => bus.$emit('ListUpdated',d));
+          this.$router.push({path: data.target + '/' + r.toString()});
     }
   },
   mounted () {
