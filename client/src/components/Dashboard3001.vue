@@ -69,39 +69,18 @@ export default {
   },
   methods: {
     navigate: async function (data ){    
-     await  bus.$emit('ListUpdated',data);
-    /*let json =JSON.parse(`[
-      {
-        "id": 0,
-        "Name": "Pipes",
-        "index": true,
-        "default": true
-      },
-      {
-        "id": 1,
-        "Name": "Joints",
-        "index": false,
-        "default": false
-      },
-      {
-        "id": 2,
-        "Name": "Dry run",
-        "index": false,
-        "default": false
-      }
-    
-    ]`);
-    */
-          await  bus.$emit('ListUpdated',data);  
+ 
           //this.$store.commit('setList',json);
           //await  this.$router.push({path: data.target, name: 'list', params: {payload: data}});
           //this.$router.push({path: data.target + '/' + r.toString()},()=>{this.$store.commit('setList',json);});   
-                                                  
-          let r = Math.random();
+
           // this.$router.push({path: data.target + '/' + r.toString()},()=>{
           //     this.$store.commit('setList',data);
-          // });   
+          // }); 
+          let r = Math.random();
+          this.$store.commit('setList',data);
           this.$router.push({path: data.target + '/' + r.toString()},() => bus.$emit('ListUpdated',data));
+          //this.$router.push({path: data.target + '/' + r.toString()});
     }
   },
   mounted () {
@@ -109,19 +88,17 @@ export default {
             var t = data; //  JSON.parse(data);
             this.cycleData = t;
             this.Current = Number(t.Current).toFixed(2);
-            this.Voltage = Number(t.Voltage).toFixed(2);
+            this.Voltage = Number(t.Voltage).toFixed(2); 
             this.YPos = Number(t.Ypos).toFixed(2);
             this.ZPos = Number(t.Zpos).toFixed(2);
             this.ThetaPos = Number(t.ThetaPos).toFixed(2);
-            this.InputHeat = Number(t.InputHeat).toFixed(2);
-            this.TravelSpeed = Number(t.TravelSpeed).toFixed(2);
+            this.InputHeat = isNaN(t.InputHeat) ? "" : Number.parseFloat(t.InputHeat).toFixed(2);
+            this.TravelSpeed = this.TravelSpeed < 0 ? 0.0 : (Number(t.TravelSpeed) * 6).toFixed(2); // multiplication in 6 ids for converting mm/s to cm/min 
             this.isDryRun = t.isDryRun == "Dry run" ? true: false;
         });
 
 
         this.socket.on('NAV',(data) => {
-         let dd = data;
-          console.log(dd);
           this.navigate(data);
         });
 
