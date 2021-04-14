@@ -4,7 +4,7 @@
     <div class="header">
       <div class="header-column robot-mode">
         <div class="mode"><span>Mode:</span><span style="color:yellow">{{cycleData.Mode}}&#32;(<span v-bind:class="{'green':(isDryRun), 'red':(!isDryRun)}">{{isDryRun ? "Dry Run" : "Weld"}}</span>)</span></div>
-        <div class="robot"><span>Robot:</span><span style="color:yellow">{{cycleData.Robot}}</span></div>
+        <div class="robot"><span>Robot:</span><span style="color:yellow">{{cycleData.Robot}}</span><span v-bind:class="{'red':(isRobotMaster === 'Slave'), 'green':(isRobotMaster === 'Master')}">{{isRobotMaster}}</span></div>
       </div>
       <div class="header-column pass" style="font-size:30px"><span>Pass:</span><span style="color:yellow">{{cycleData.Pass}}</span></div>
       <div class="header-column joint-heat">
@@ -64,7 +64,8 @@ export default {
           InputHeat: 0.0,
           TravelSpeed: 0.0,
           isDryRun: false,
-          current_list: {}
+          current_list: {},
+          isRobotMaster: ''
       }
   },
   methods: {
@@ -95,6 +96,8 @@ export default {
             this.InputHeat = isNaN(t.InputHeat) ? "" : Number.parseFloat(t.InputHeat).toFixed(2);
             this.TravelSpeed = this.TravelSpeed < 0 ? 0.0 : (Number(t.TravelSpeed) * 6).toFixed(2); // multiplication in 6 ids for converting mm/s to cm/min 
             this.isDryRun = t.isDryRun == "Dry run" ? true: false;
+            this.isRobotMaster = t.isRobotMaster;
+            console.log(t.isMasterRobot)
         });
 
 
@@ -282,5 +285,15 @@ export default {
     color:red;
     font:bolder;
     font-size: 24px;
+  }
+    .slave{
+    color :red ;
+    font:bolder;
+    font-size: 20px;
+  }
+  .master{
+    color  : olive ;
+    font:bolder;
+    font-size: 20px;
   }
 </style>

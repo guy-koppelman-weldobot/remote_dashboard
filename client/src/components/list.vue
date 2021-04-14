@@ -23,35 +23,42 @@ export default {
             // PORT---------------------
             //socket : io('127.0.0.1:3000'),
             current_index: 0,
-            current_list: [],
+            current_list: this.$store.state.current_list.data.Item2,
             list_name: ''
         }
     },
 
     methods: {
     },
-    computed : {
-        list(){
-            return this.$store.state.current_list.data.Item2;
-        },
-        ListName (){
-            return this.$store.state.current_list.data.Item1;
-        }
-    },
-    watch: {
-        List () {
-            this.current_list = this.$store.state.current_list.data.Item2;
-        },
-        ListName () {
-            this.list_name = this.$store.state.current_list.data.Item1;
-        }
-    } ,
+
+    // computed : {
+    //     list(){
+    //         return this.$store.state.current_list.data.Item2;
+    //     },
+    //     ListName (){
+    //         return this.$store.state.current_list.data.Item1;
+    //     }
+    // },
+    // watch: {
+    //     List: {
+    //         deep: true,
+    //          handler() {
+    //                 this.current_list = this.$store.state.current_list.data.Item2;
+    //          }
+            
+    //     },
+    //     ListName: {
+    //         handler() {
+    //             this.list_name = this.$store.state.current_list.data.Item1;
+    //         }
+    //     }
+    // } ,
     mounted() {
         
-        // bus.$on('ListUpdated', (list) =>{
-        //     this.current_list = list.data.Item2;
-        //     this.list_name = list.data.Item1;
-        // });
+        bus.$on('ListUpdated', (list) =>{
+            this.current_list = list.data.Item2;
+            this.list_name = list.data.Item1;
+        });
 
         //this.current_list = this.$route.params.payload.list.data.Item2;
         //this.current_list = this.$store.state.current_list;

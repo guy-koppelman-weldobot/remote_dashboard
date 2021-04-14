@@ -4,7 +4,7 @@
     <div class="header">
       <div class="header-column robot-mode">
         <div class="mode"><span>Mode:</span><span style="color:yellow">{{cycleData.Mode}}&#32;(<span v-bind:class="{'green':(isDryRun), 'red':(!isDryRun)}">{{isDryRun ? "Dry Run" : "Weld"}}</span>)</span></div>
-        <div class="robot"><span>Robot:</span><span style="color:yellow">{{cycleData.Robot}}</span></div>
+        <div class="robot"><span>Robot:</span><span style="color:yellow">{{cycleData.Robot}}</span><span v-bind:class="{'red':(isRobotMaster === 'Slave'), 'green':(isRobotMaster === 'Master')}">{{isRobotMaster}}</span></div>
       </div>
       <div class="header-column pass" style="font-size:30px"><span>Pass:</span><span style="color:yellow">{{cycleData.Pass}}</span></div>
       <div class="header-column joint-heat">
@@ -46,7 +46,7 @@
 <script>
 
 import io from 'socket.io-client';
-//import {bus} from '../main';
+import {bus} from '../main';
 export default {
   name: 'Dashboard3000',
   components: {
@@ -64,54 +64,12 @@ export default {
           InputHeat: 0.0,
           TravelSpeed: 0.0,
           isDryRun: false,
-          current_list: {}
+          current_list: {},
+          isRobotMaster: ''
       }
   },
   methods: {
     navigate: async function (data ){    
-    // let json1 = JSON.parse(`[
-    //   {
-    //     "id": 0,
-    //     "Name": "Pipes",
-    //     "index": true,
-    //     "default": true
-    //   },
-    //   {
-    //     "id": 1,
-    //     "Name": "Joints",
-    //     "index": false,
-    //     "default": false
-    //   },
-    //   {
-    //     "id": 2,
-    //     "Name": "Dry run",
-    //     "index": false,
-    //     "default": false
-    //   }
-    
-    // ]`);
-
-    // let json2 = JSON.parse(`[
-    //   {
-    //     "id": 0,
-    //     "Name": "Pipes",
-    //     "index": false,
-    //     "default": false
-    //   },
-    //   {
-    //     "id": 1,
-    //     "Name": "Joints",
-    //     "index": true,
-    //     "default": true
-    //   },
-    //   {
-    //     "id": 2,
-    //     "Name": "Dry run",
-    //     "index": false,
-    //     "default": false
-    //   }
-    
-    // ]`);
     
          // await  bus.$emit('ListUpdated',data);  
           //this.$store.commit('setList',json);
@@ -128,9 +86,9 @@ export default {
           //     this.$store.commit('setList',data);
           // }); 
           let r = Math.random();
-          this.$store.commit('setList',data);  
-          //this.$router.push({path: data.target + '/' + r.toString()},() => bus.$emit('ListUpdated',d));
-          this.$router.push({path: data.target + '/' + r.toString()});
+          this.$store.commit('setList',data);
+          this.$router.push({path: data.target + '/' + r.toString()},() => bus.$emit('ListUpdated',data));
+          //this.$router.push({path: data.target + '/' + r.toString()});
     }
   },
   mounted () {
@@ -142,9 +100,10 @@ export default {
             this.YPos = Number(t.Ypos).toFixed(2);
             this.ZPos = Number(t.Zpos).toFixed(2);
             this.ThetaPos = Number(t.ThetaPos).toFixed(2);
-            this.InputHeat = Number(t.InputHeat).toFixed(2);
-            this.TravelSpeed = Number(t.TravelSpeed).toFixed(2);
+            this.InputHeat = isNaN(t.InputHeat) ? "" : Number.parseFloat(t.InputHeat).toFixed(2);
+            this.TravelSpeed = this.TravelSpeed < 0 ? 0.0 : (Number(t.TravelSpeed) * 6).toFixed(2); // multiplication in 6 ids for converting mm/s to cm/min 
             this.isDryRun = t.isDryRun == "Dry run" ? true: false;
+            this.isRobotMaster = t.isRobotMaster;
         });
 
 
@@ -332,5 +291,16 @@ export default {
     color:red;
     font:bolder;
     font-size: 24px;
+  }
+
+  .slave{
+    color :palevioletred ;
+    font:bolder;
+    font-size: 20px;
+  }
+  .master{
+    color  : olive ;
+    font:bolder;
+    font-size: 20px;
   }
 </style>
